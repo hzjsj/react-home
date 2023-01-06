@@ -1,14 +1,14 @@
-import {COVER_HOST} from "./index";
+import { COVER_HOST } from "./index";
 
 export const DEFAULT_COVER = {
-  name: '满天繁星',
-  preview: '/dynamic/stars/preview.png',
-  src: '/dynamic/stars/index.html',
+  name: '樱花少女',
+  preview: "/dynamic/cover-01/preview.jpg",
+  src: '/dynamic/cover-01/index.html',
   type: 'iframe',
 }
 
 const sceneryList = Array.from(Array(12), (v, k) => {
-  let num = k + 1;
+  let num: number = k + 1;
   return {
     name: `风景 ${num}`,
     preview: `/scenery/preview/cover_${num}.jpg`,
@@ -18,7 +18,7 @@ const sceneryList = Array.from(Array(12), (v, k) => {
 })
 
 const starList = Array.from(Array(12), (v, k) => {
-  let num = k + 1;
+  let num: number = k + 1;
   return {
     name: `星空 ${num}`,
     preview: `/star/preview/cover_${num}.jpg`,
@@ -28,7 +28,7 @@ const starList = Array.from(Array(12), (v, k) => {
 })
 
 const poolList = Array.from(Array(12), (v, k) => {
-  let num = k + 1;
+  let num: number = k + 1;
   return {
     name: `淡雅 ${num}`,
     preview: `/pool/preview/cover_${num}.jpg`,
@@ -38,7 +38,7 @@ const poolList = Array.from(Array(12), (v, k) => {
 })
 
 const comicList = Array.from(Array(12), (v, k) => {
-  let num = k + 1;
+  let num: number = k + 1;
   return {
     name: `动漫 ${num}`,
     preview: `/comic/preview/cover_${num}.jpg`,
@@ -47,7 +47,35 @@ const comicList = Array.from(Array(12), (v, k) => {
   }
 })
 
-const dataList = [
+// type CoverType = {
+//   name: string;
+//   preview: string;
+//   src?: string;
+//   api?: string;
+//   type: string;
+// }
+export interface CoverType {
+  name: string;
+  preview: string;
+  src?: string;
+  api?: string;
+  type: string;
+}
+
+type DataListType = {
+  name: string;
+  key: string;
+  list: {
+    name: string;
+    preview: string;
+    src?: string;
+    api?: string;
+    type: string;
+  }[];
+}
+
+
+const dataList: DataListType[] = [
   {
     name: "动态",
     key: "dynamic",
@@ -57,12 +85,6 @@ const dataList = [
         name: '樱花飞舞',
         preview: "/dynamic/sakura/preview.png",
         src: '/dynamic/sakura/index.html',
-        type: 'iframe',
-      },
-      {
-        name: '樱花少女',
-        preview: "/dynamic/cover-01/preview.jpg",
-        src: '/dynamic/cover-01/index.html',
         type: 'iframe',
       },
       {

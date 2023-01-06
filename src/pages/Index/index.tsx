@@ -6,7 +6,7 @@ import logo from '../../assets/logo.png';
 import baidu from '../../assets/baidu.png';
 import google from '../../assets/google.png';
 import { myLike } from "../../constant/defaultHome";
-import defaultTabPane, { DEFAULT_COVER } from "../../constant/defaultTabPane";
+import defaultTabPane, { DEFAULT_COVER, CoverType } from "../../constant/defaultTabPane";
 import { CURRENT_COVER, GHOST_OPEN, PROJECT_GITHUB, SEARCH_ALL_OPEN, WEB_HOST } from "../../constant";
 import axios from 'axios'
 import './index.css';
@@ -35,27 +35,28 @@ const localStorage = window.localStorage;
 
 /**
  * 主页
- * @author codenav
- * @return {*}
  */
 export default () => {
 
-    const [tabKey, setTabKey] = useState('myLike');
     const [maskOpened, setMaskOpened] = useState(false);
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isBaidu, setIsBaidu] = useState(true);
     // 开启万能搜索
-    const currentSearchAll = localStorage.getItem(SEARCH_ALL_OPEN) ? localStorage.getItem(SEARCH_ALL_OPEN) : true;
+    const currentSearchAll = localStorage.getItem(SEARCH_ALL_OPEN) ? JSON.parse(localStorage.getItem(SEARCH_ALL_OPEN)!) : true;
     const [searchAll, setSearchAll] = useState(currentSearchAll);
     // 当前封面
-    const currentCover = localStorage.getItem(CURRENT_COVER) ? localStorage.getItem(CURRENT_COVER) : DEFAULT_COVER;
+    const currentCover = localStorage.getItem(CURRENT_COVER) ? JSON.parse(localStorage.getItem(CURRENT_COVER)!) : DEFAULT_COVER;
     const [cover, setCover] = useState(currentCover);
     // 透明模式
-    const currentGhostClose = localStorage.getItem(GHOST_OPEN) ? localStorage.getItem(GHOST_OPEN) : false;
+    const currentGhostClose = localStorage.getItem(GHOST_OPEN) ? JSON.parse(localStorage.getItem(GHOST_OPEN)!) : false;
     const [ghostClose, setGhostClose] = useState(currentGhostClose);
 
 
     const navigate = useNavigate()
+
+    const onTabsChange = (key: string) => {
+        console.log(key, 'DrawerTabPanesss');
+    };
 
     const doSearch = (value: string) => {
         if (value.length < 1) {
@@ -73,7 +74,10 @@ export default () => {
         }
     }
 
-    const changeCover = async (cover: any) => {
+    /**
+     * 切换背景
+     */
+    const changeCover = async (cover: CoverType) => {
         if (cover.type === 'api') {
             const hide = message.loading('获取壁纸中..', 0);
             const res = await axios.get(`https://bird.ioliu.cn/v1/?url=${cover.api}`).finally(() => hide());
@@ -112,8 +116,9 @@ export default () => {
         setDrawerVisible(false)
     };
 
+    // 首页我的收藏列表
     const renderViewByTabKey = myLike.map((resource, index) =>
-        <a href={resource.link} target="_blank" key={index} style={{color:'red',display:'inherit'}}>
+        <a href={resource.link} target="_blank" key={index} style={{ color: 'red', display: 'inherit' }}>
             <Card.Grid style={{
                 width: '25%',
                 textAlign: 'center',
@@ -128,6 +133,7 @@ export default () => {
     )
 
 
+    // 切换壁纸时的导航栏
     const drawerTitle = (
         <div className="drawer-title">
             <a href={WEB_HOST} target="_blank">
@@ -136,34 +142,6 @@ export default () => {
             </a>
         </div>
     )
-
-    const DrawerTabPanes = defaultTabPane.map((item, index) => {
-        return (
-            <Tabs.TabPane tab={item.name} key={item.key}>
-                {/* <List
-                    rowKey="id"
-                    grid={listGrid}
-                    dataSource={item.list}
-                    renderItem={(cover, index) => {
-                        return (
-                            <List.Item key={index} style={{ marginBottom: 28 }}>
-                                <Card
-                                    hoverable
-                                    key={index}
-                                    cover={<Image alt={cover.name} preview={false} placeholder
-                                        src={cover.preview} />}
-                                    bodyStyle={{ padding: 12, textAlign: 'center' }}
-                                    onClick={() => changeCover(cover)}
-                                >
-                                    {cover.name}
-                                </Card>
-                            </List.Item>
-                        );
-                    }}
-                /> */}
-            </Tabs.TabPane>
-        )
-    })
 
     return (
         <div className={`index${ghostClose ? '' : ' ghost'}`}>
@@ -222,17 +200,45 @@ export default () => {
                 onClose={onClose}
             >
                 <div className="drawer-wrapper">
-                    <Tabs defaultActiveKey="1" type="card" centered>
-                        {DrawerTabPanes}
-                    </Tabs>
+                    <Tabs
+                        onChange={onTabsChange}
+                        type="card" centered
+                        items={defaultTabPane.map((item, i) => {
+                            return {
+                                label: item.name,
+                                key: item.key,
+                                children: <List
+                                    grid={listGrid}
+                                    dataSource={item.list}
+                                    renderItem={(cover, index) => {
+                                        return (
+                                            <List.Item key={index} style={{ marginBottom: 28 }}>
+                                                <Card
+                                                    hoverable
+                                                    key={index}
+                                                    cover={<Image alt={cover.name} preview={false} placeholder
+                                                        src={cover.preview} />}
+                                                    bodyStyle={{ padding: 12, textAlign: 'center' }}
+                                                    onClick={() => changeCover(cover)}
+                                                >
+                                                    {cover.name}
+                                                </Card>
+                                            </List.Item>
+                                        );
+                                    }}
+                                />,
+                            };
+                        })}
+                    />
                 </div>
             </Drawer>
+
             <div className={'mask' + (maskOpened ? '' : ' hidden')} />
-            {/* {
+            {
                 cover.type === 'iframe' ?
-                    <iframe className="bg" title="myIframe" src={cover.src} marginWidth={0} marginHeight={0} /> :
+                    <iframe className="bg" title="myIframe" src={cover.src} /> :
                     <img className="bg" src={cover.src} alt="bg" />
-            } */}
+            }
         </div>
     )
 }

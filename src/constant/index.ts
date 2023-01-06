@@ -6,7 +6,7 @@ export const WEB_HOST = '/';
 /**
  * 封面域名
  */
-export const COVER_HOST = 'https://home.kdsa.cn/covers';
+export const COVER_HOST = 'https://636f-codenav-8grj8px727565176-1256524210.tcb.qcloud.la/covers';
 
 /**
  * GitHub 地址
