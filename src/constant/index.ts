@@ -6,12 +6,12 @@ export const WEB_HOST = '/';
 /**
  * 封面域名
  */
-export const COVER_HOST = 'https://636f-codenav-8grj8px727565176-1256524210.tcb.qcloud.la/covers';
+export const COVER_HOST = 'https://home.kdsa.cn/covers';
 
 /**
  * GitHub 地址
  */
-export const PROJECT_GITHUB = 'https://github.com/liyupi/code-nav';
+export const PROJECT_GITHUB = 'https://github.com/hzjsj/react-home';
 
 /**
  * 当前封面 键名
