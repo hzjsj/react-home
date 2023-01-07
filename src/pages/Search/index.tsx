@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { Avatar, Col, Layout, Menu, Row } from "antd";
-import Search from "antd/es/input/Search";
-import { Header } from "antd/es/layout/layout";
-
+import { Avatar, Col, Layout, Menu, Row, Input } from "antd";
 import { useSearchParams } from 'react-router-dom'
-
 import { createFromIconfontCN } from '@ant-design/icons';
 import logo from '../../assets/logo.png';
 import { WEB_HOST } from "../../constant";
-
 import type { MenuProps } from 'antd';
+
+const { Search } = Input;
+const { Header } = Layout;
+
+
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_2316101_26mu1eoa684h.js',
 });

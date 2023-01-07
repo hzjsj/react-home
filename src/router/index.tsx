@@ -4,10 +4,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Index from '../pages/Index';
-import About from '../pages/about';
+import Search from '../pages/Search'
 import NoFoundPage from "../pages/NoFoundPage";
 
-import Search from '../pages/Search'
 // 2. 调用 createBrowserRouter 方法生成实例  -> 生成 history 模式的路由
 //    或者 createHashRouter -> 生成 Hash 模式的路由
 const router = createBrowserRouter([

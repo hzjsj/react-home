@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Avatar, Card, List, Input, message, Drawer, Button, Tabs, Tooltip, Image, Switch, Col, Row } from 'antd';
+import { useState } from 'react';
+import { Avatar, Card, List, Input, message, Drawer, Button, Tabs, Tooltip, Image, Switch } from 'antd';
 import { useNavigate } from "react-router-dom"
 import { PictureOutlined, SearchOutlined, GithubOutlined } from '@ant-design/icons';
 import logo from '../../assets/logo.png';
